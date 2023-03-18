@@ -1,12 +1,13 @@
 ---
-title: "epid3_sph"
+title: "Title: EPI3 - In Class Labs"
 author: "JMC"
+date: "Last Update: `r format(Sys.time(), '%m/%d/%y')`"
 output:
   html_document: default
-  pdf_document: default
 ---
 ## Lab 1
 ```{r, warning=FALSE, message=FALSE}
+#want to see the html page? go here: https://iamjmc.github.io/epid3_sph/
 library(haven)
 library(dplyr)
 library(tidyr)
