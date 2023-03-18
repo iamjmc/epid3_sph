@@ -1,16 +1,18 @@
 ---
 title: "epid3_sph"
 author: "JMC"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 ## Lab 1
-```{r, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(haven)
 library(dplyr)
 library(tidyr)
 library(expss)
 chs19 <- read_sas("https://www1.nyc.gov/assets/doh/downloads/sas/episrv/chs2019_public.sas7bdat")
-keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "generalhealth", "education", "exercise19",  "wallmold")
+keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "generalhealth", "education", "exercise19",  "wallmold", "colonoscopy10yr19")
 mydata <- dplyr::select(chs19, keepcols)
 
 mydata <-  mydata %>%
@@ -52,7 +54,9 @@ usborn= recode_factor(usborn, `1` = "US Born",
 exercise19= recode_factor(exercise19, `1` = "Yes",
                                       `2`="No"),
 wallmold= recode_factor(wallmold, `1` = "Yes",
-                                      `2`="No")
+                                      `2`="No"),
+colonoscopy10yr19 = recode_factor(colonoscopy10yr19, `1`="Less than 10 yrs ago",
+                                  `2` = " Never or >=10yr")
 )
 mydata = apply_labels(mydata,
                       insured = "Insured?",
@@ -97,7 +101,7 @@ mydata %$%  # Acts like with(tobacco, ...)
   print(method = "render")
 ```
 
-```{r, cache=TRUE, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(survey)
 library(sjstats)
 svy <-
@@ -166,7 +170,7 @@ plot(g)
 
 ## Lab 3- Hypothesis Testing, Model Development, and Presentation of Results
 Just a note: borough would require a DUA and currently not available. The variables noisetraffic, and badairwarning do not exist in CHS19. I use Wall Mold 
-```{r, cache=TRUE, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 #Draw a dag for association between USBORN and EVERASTHMA
 l3dag <- dagitty('
 dag {
@@ -203,7 +207,7 @@ plot (l3dag)
 
 adjusting for direct effect - education, howlonginUS, race, smoker OR education, race, smoker, wall mold
 adjusting for total effect - education, howlonginUS, race, smoker OR education, race, smoker, wall mold
-```{r, cache=TRUE, warning=FALSE, message=FALSE}
+```{r,  warning=FALSE, message=FALSE}
 #create table 1
 library(table1)
 label(mydata$everasthma) <-"Ever had asthma"
@@ -235,7 +239,7 @@ pvalue <- function(x, ...) {
 table1(~usborn + newrace6 + agegroup + birthsex + eversmoker  + wallmold | everasthma, data=mydata, overall="Total", extra.col=list(`P-value`=pvalue))
 ```
 
-```{r, cache=TRUE, warning=FALSE, message=FALSE}
+```{r,  warning=FALSE, message=FALSE}
 #create table 2
 library(gtsummary)
 library(broom)
@@ -247,7 +251,6 @@ fit.usborn <- glm(everasthma~usborn,
                   family="binomial")%>% 
 tbl_regression(
   exponentiate = TRUE )
-
 
 fit.education <-glm(everasthma~education,
                    data=mydata,
@@ -287,4 +290,31 @@ tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c("Unadjusted Analysis"
 ```
 
 Lab 4 - Interaction
+Exposure: Insurance
+EM: Education
+Outcome: Colonoscopy 
+```{r,  warning=FALSE, message=FALSE}
+label(mydata$colonoscopy10yr19) <- "Colonoscopy in last 10 years"
+#make a variable for 0-45, 45+ 
+mydata <-  mydata %>%
+  mutate(age45plus=case_when(
+  mydata$agegroup=="18-24"| mydata$agegroup=="25-44" ~ 0,
+  mydata$agegroup=="45-64" | mydata$agegroup=="65+" ~ 1
+)) 
 
+mydata <- transform(mydata,
+age45plus = recode_factor(age45plus, `0`="Under 45 plus", 
+                                      `1`="Over 45 plus"
+))
+
+table(mydata$agegroup, mydata$age45plus)
+table1(~insured + colonoscopy10yr19+ education + age45plus, data=mydata, overall="Total")
+mydata %$%  # Acts like with(tobacco, ...)
+  ctable(x=education, y=insured, z=age45plus,
+         chisq = TRUE,
+         OR    = TRUE,
+         RR    = TRUE,
+         headings = FALSE,
+         prop = "c" ) %>%
+  print(method = "render")
+```
