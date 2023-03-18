@@ -11,6 +11,7 @@ library(haven)
 library(dplyr)
 library(tidyr)
 library(expss)
+#using NYC CHS data - see here for codebook: https://www.nyc.gov/assets/doh/downloads/pdf/episrv/chs2019-codebook.pdf
 chs19 <- read_sas("https://www1.nyc.gov/assets/doh/downloads/sas/episrv/chs2019_public.sas7bdat")
 keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "generalhealth", "education", "exercise19",  "wallmold", "colonoscopy10yr19")
 mydata <- dplyr::select(chs19, keepcols)
