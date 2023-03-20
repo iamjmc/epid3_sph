@@ -301,13 +301,13 @@ tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c("Unadjusted Analysis"
 ## Lab 4 - Interaction
 Exposure: Insurance EM: Education Outcome: Colonoscopy 
 
-# Knol & VanderWeele - Presenting EM 
+Knol & VanderWeele - Presenting EM 
 1. Present RR, OR/RD with CI for each stratum of E and X with a single reference category
 2. Present RR, OR/RD with CI for E within strata of X
 3. Present measures of EM on both additive and multiplicative scales (with CI & P)
 4. List confounders for which the relation of E and D was adjusted
 
-# Knol - Presenting Interaction
+Knol - Presenting Interaction
 1. Present RR, OR/RD with CI for each stratum of E and B with single reference category 
 2. Present RR, OR/RD for E on D within strata of B and of B on D within strata of E
 3. Present measures of EM on both additive (RERI) and multiplicative scales 
@@ -436,7 +436,7 @@ tab <- table(mydata$insured, mydata$colonoscopy10yr19, mydata$college)
 epi.2by2(tab)
 ```
 
-```{r}
+```{r, warning=FALSE}
 library(interactionR)
 #interaction 
 #with interactionR you may run into a problem of "At least one of the exposure names you have identified cannot be found in your model - You have to change the variables to straight 0/1 instead of the 1/2 found in CHS data 
