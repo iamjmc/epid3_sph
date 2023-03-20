@@ -3,12 +3,13 @@ title: "EPI3 - In Class Labs"
 author: "JMC"
 date: "Last Update: `r format(Sys.time(), '%m/%d/%y')`"
 output:
-  html_document: default
-  
-  toc: true
-  number_sections: true
+  html_document: 
+    toc: true
+    toc_float: 
+          collapsed: false
+          smooth_scroll: false
 ---
-### Lab 1
+## Lab 1
 ```{r, warning=FALSE, message=FALSE}
 #want to see the html page? go here: https://iamjmc.github.io/epid3_sph/
 library(haven)
@@ -63,7 +64,7 @@ exercise19= recode_factor(exercise19, `1` = "Yes",
 wallmold= recode_factor(wallmold, `1` = "Yes",
                                       `2`="No"),
 colonoscopy10yr19 = recode_factor(colonoscopy10yr19, `1`="Less than 10 yrs ago",
-                                  `2` = " Never or >=10yr")
+                                  `2` = "Never or >=10yr")
 )
 mydata = apply_labels(mydata,
                       insured = "Insured?",
@@ -71,7 +72,7 @@ mydata = apply_labels(mydata,
                       colonoscopy10yr19 = "Colonoscopy in last 10 years"
 )
 
-#pesky missing asthma data
+#pesky missing asthma data - if I don't delete this then table 1 will not be able to be stratified
 mydata <- mydata %>%
            filter(!is.na(everasthma))
 
@@ -131,7 +132,7 @@ svytable(~eversmoker+birthsex, svy)
 svychisq(~eversmoker+birthsex, svy)
 ```
 
-### Lab 2 - causality & dags
+## Lab 2 - Causality & DAGs
 You are interested in assessing whether physical activity( exposure) is causally related to heart disease (outcome). 
 1. What other variables would you want to include in your DAG? Create a DAG with these variables and identify variables needed for total and direct effects?
 ```{r}
@@ -176,7 +177,7 @@ plot(g)
 #Adjusting for total effects= Age, Gender, SES
 #Adjusting for direct effects = Age, BMI, Diet, Gender, SES
 
-### Lab 3- Hypothesis Testing, Model Development, and Presentation of Results
+## Lab 3- Hypothesis Testing, Model Development, and Presentation of Results
 Just a note: borough would require a DUA and currently not available. The variables noisetraffic, and badairwarning do not exist in CHS19. I use Wall Mold 
 ```{r, warning=FALSE, message=FALSE}
 #Draw a dag for association between USBORN and EVERASTHMA
@@ -297,7 +298,7 @@ unadjusted <- tbl_stack(list(fit.usborn, fit.education, fit.race, fit.eversmoker
 tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c("Unadjusted Analysis", "Adjusted Analysis"))
 ```
 
-### Lab 4 - Interaction
+## Lab 4 - Interaction
 Exposure: Insurance EM: Education Outcome: Colonoscopy 
 # Knol & VanderWeele - Presenting EM 
 1. Present RR, OR/RD with CI for each stratum of E and X with a single reference category
@@ -353,23 +354,20 @@ mydata <- mydata %>%
   mutate(college=case_when(
     mydata$education=="College graduate" ~ 1, 
     mydata$education!="College graduate" ~ 0
-  )) %>% #theres prob an easier way to do this
-  transform(mydata, college=recode_factor(college, `0`="No College Grad", 
-                                          `1`="College Grad"))
+  )) 
 
+mydata <- mydata %>% 
+  mutate(hasinsurance=case_when(
+    mydata$insured=="Yes, insured" ~ 1, 
+    mydata$insured=="No, uninsured" ~ 0
+  ))
+mydata <- mydata %>%
+  mutate(recentcolonoscopy=case_when(
+    mydata$colonoscopy10yr19=="Less than 10 yrs ago" ~ 1, 
+    mydata$colonoscopy10yr19=="Never or >=10yr" ~0
+  )
+  )
 
-mydata %$%  # what percentage of age 45+ are college graduates?
-  ctable(x=age50up, y=college, 
-         chisq = TRUE,
-         OR    = TRUE,
-         RR    = TRUE,
-         headings = FALSE,
-         useNA="no",
-         prop = "c" ) %>%
-  print(method = "render")
-
-mydata$colonoscopy10yr19 <- relevel(mydata$colonoscopy10yr19, ref = 2) 
-mydata$insured <- relevel(mydata$insured, ref = 2) 
 
 #make tables by college education
 stby(data    = list(x = mydata$insured, y = mydata$colonoscopy10yr19), 
@@ -382,7 +380,33 @@ stby(data    = list(x = mydata$insured, y = mydata$colonoscopy10yr19),
      )
 library(interactionR)
 library(broom)
+#stratifying education categories - surely there must be an easier way a la bysort education: log in STATA?? 
 fit.strata <- glm(colonoscopy10yr19~ insured + strata(education), data=mydata, family=binomial(link="logit"))
+
+fit.strata.LHS <- glm(colonoscopy10yr19~ insured , subset=education=="Less than HS", data=mydata, family=binomial(link="logit")) %>%
+    tbl_regression(
+    exponentiate = TRUE,
+  )
+
+
+fit.strata.HS <- glm(colonoscopy10yr19~ insured , subset=education=="High school grad", data=mydata, family=binomial(link="logit")) %>%
+    tbl_regression(
+    exponentiate = TRUE,
+  )
+
+
+fit.strata.SC <- glm(colonoscopy10yr19~ insured , subset=education=="Some college", data=mydata, family=binomial(link="logit")) %>%
+    tbl_regression(
+    exponentiate = TRUE,
+  )
+
+
+fit.strata.CG <- glm(colonoscopy10yr19~ insured , subset=education=="College graduate", data=mydata, family=binomial(link="logit")) %>%
+    tbl_regression(
+    exponentiate = TRUE,
+  )
+
+tbl_merge(list(fit.strata.LHS, fit.strata.HS, fit.strata.SC, fit.strata.CG), tab_spanner  = c("Less than HS", "High School grad", "Some College", "College Grad"))
 
 results.strata<-tidy(fit.strata)
 fit_cis_95 <- confint(fit.strata, level = 0.95) %>% 
@@ -413,10 +437,35 @@ ggplot(results,
         ggtitle("Outcome: Colonoscopy") +
         coord_flip()
 
-fit.interaction <- glm(colonoscopy10yr19~insured*college, 
-                   data=mydata, na.action=na.omit,
+library(epiR)
+tab <- table(mydata$insured, mydata$colonoscopy10yr19, mydata$college)
+epi.2by2(tab)
+```
+
+```{r}
+
+library(interactionR)
+#interaction 
+#with interactionR you may run into a problem of "At least one of the exposure names you have identified cannot be found in your model - You have to change the variables to straight 0/1 instead of the 1/2 found in CHS data 
+fit.interaction <- glm(recentcolonoscopy~hasinsurance*college, 
+                   data=mydata, 
                    family = binomial(link = "logit")) 
 
+interactionR1 <- interactionR(fit.interaction,
+exposure_names = c("college", "hasinsurance"),
+ci.type = "delta", ci.level = 0.95,
+em = F,  #T for EMM, F for interaction
+recode = T
+) 
+interactionR_table(interactionR1, file_path = "interactionR2")
+
+interactionR2 <- interactionR(fit.interaction,
+exposure_names = c("college", "hasinsurance"),
+ci.type = "delta", ci.level = 0.95,
+em = T, 
+recode = T
+) 
+  interactionR_table(interactionR2, file_path = "interactionR2")
 
 ```
 
