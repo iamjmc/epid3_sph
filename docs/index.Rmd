@@ -9,7 +9,7 @@ output:
           collapsed: false
           smooth_scroll: false
 ---
-## Lab 1
+## Lab 1 - Review & Surveys
 ```{r, warning=FALSE, message=FALSE}
 #want to see the html page? go here: https://iamjmc.github.io/epid3_sph/
 library(haven)
@@ -286,7 +286,7 @@ fit.wallmold <- glm(everasthma~wallmold,
     exponentiate = TRUE)
 
 #adjusted model
-fit.adjusted <-glm(everasthma~usborn + education+newrace6+smoker,
+fit.adjusted <-glm(everasthma~usborn + education+newrace6+eversmoker,
                    data=mydata,
                    family="binomial") %>%
     tbl_regression(
@@ -300,11 +300,13 @@ tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c("Unadjusted Analysis"
 
 ## Lab 4 - Interaction
 Exposure: Insurance EM: Education Outcome: Colonoscopy 
+
 # Knol & VanderWeele - Presenting EM 
 1. Present RR, OR/RD with CI for each stratum of E and X with a single reference category
 2. Present RR, OR/RD with CI for E within strata of X
 3. Present measures of EM on both additive and multiplicative scales (with CI & P)
 4. List confounders for which the relation of E and D was adjusted
+
 # Knol - Presenting Interaction
 1. Present RR, OR/RD with CI for each stratum of E and B with single reference category 
 2. Present RR, OR/RD for E on D within strata of B and of B on D within strata of E
@@ -387,27 +389,19 @@ fit.strata.LHS <- glm(colonoscopy10yr19~ insured , subset=education=="Less than 
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.HS <- glm(colonoscopy10yr19~ insured , subset=education=="High school grad", data=mydata, family=binomial(link="logit")) %>%
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.SC <- glm(colonoscopy10yr19~ insured , subset=education=="Some college", data=mydata, family=binomial(link="logit")) %>%
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.CG <- glm(colonoscopy10yr19~ insured , subset=education=="College graduate", data=mydata, family=binomial(link="logit")) %>%
     tbl_regression(
     exponentiate = TRUE,
   )
-
 tbl_merge(list(fit.strata.LHS, fit.strata.HS, fit.strata.SC, fit.strata.CG), tab_spanner  = c("Less than HS", "High School grad", "Some College", "College Grad"))
-
 results.strata<-tidy(fit.strata)
 fit_cis_95 <- confint(fit.strata, level = 0.95) %>% 
   data.frame() %>%
@@ -443,7 +437,6 @@ epi.2by2(tab)
 ```
 
 ```{r}
-
 library(interactionR)
 #interaction 
 #with interactionR you may run into a problem of "At least one of the exposure names you have identified cannot be found in your model - You have to change the variables to straight 0/1 instead of the 1/2 found in CHS data 
@@ -451,22 +444,25 @@ fit.interaction <- glm(recentcolonoscopy~hasinsurance*college,
                    data=mydata, 
                    family = binomial(link = "logit")) 
 
-interactionR1 <- interactionR(fit.interaction,
+interactionR(fit.interaction,
 exposure_names = c("college", "hasinsurance"),
 ci.type = "delta", ci.level = 0.95,
 em = F,  #T for EMM, F for interaction
 recode = T
-) 
-interactionR_table(interactionR1, file_path = "interactionR2")
+) %>%
+interactionR_table() %>%
+             knit_print()
 
-interactionR2 <- interactionR(fit.interaction,
+interactionR(fit.interaction,
 exposure_names = c("college", "hasinsurance"),
 ci.type = "delta", ci.level = 0.95,
 em = T, 
 recode = T
-) 
-  interactionR_table(interactionR2, file_path = "interactionR2")
+) %>%
+interactionR_table() %>%
+             knit_print()
+
 
 ```
 
-## Lab 5 - 
+## Lab 5 - Mediation

@@ -1593,8 +1593,8 @@ font-size: 0.95em;
 </div>
 
 
-<div id="lab-1" class="section level2">
-<h2>Lab 1</h2>
+<div id="lab-1---review-surveys" class="section level2">
+<h2>Lab 1 - Review &amp; Surveys</h2>
 <pre class="r"><code>#want to see the html page? go here: https://iamjmc.github.io/epid3_sph/
 library(haven)
 library(dplyr)
@@ -2389,7 +2389,7 @@ fit.wallmold &lt;- glm(everasthma~wallmold,
     exponentiate = TRUE)
 
 #adjusted model
-fit.adjusted &lt;-glm(everasthma~usborn + education+newrace6+smoker,
+fit.adjusted &lt;-glm(everasthma~usborn + education+newrace6+eversmoker,
                    data=mydata,
                    family=&quot;binomial&quot;) %&gt;%
     tbl_regression(
@@ -2399,11 +2399,11 @@ fit.adjusted &lt;-glm(everasthma~usborn + education+newrace6+smoker,
 unadjusted &lt;- tbl_stack(list(fit.usborn, fit.education, fit.race, fit.eversmoker))
 
 tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c(&quot;Unadjusted Analysis&quot;, &quot;Adjusted Analysis&quot;))</code></pre>
-<div id="dvfudpmomu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="elswlqjhag" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
-#dvfudpmomu .gt_table {
+#elswlqjhag .gt_table {
 display: table;
 border-collapse: collapse;
 margin-left: auto;
@@ -2427,7 +2427,7 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#dvfudpmomu .gt_heading {
+#elswlqjhag .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2438,11 +2438,11 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dvfudpmomu .gt_caption {
+#elswlqjhag .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#dvfudpmomu .gt_title {
+#elswlqjhag .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2453,7 +2453,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#dvfudpmomu .gt_subtitle {
+#elswlqjhag .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2464,12 +2464,12 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#dvfudpmomu .gt_bottom_border {
+#elswlqjhag .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvfudpmomu .gt_col_headings {
+#elswlqjhag .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2483,7 +2483,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dvfudpmomu .gt_col_heading {
+#elswlqjhag .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2502,7 +2502,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#dvfudpmomu .gt_column_spanner_outer {
+#elswlqjhag .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2513,13 +2513,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#dvfudpmomu .gt_column_spanner_outer:first-child {
+#elswlqjhag .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#dvfudpmomu .gt_column_spanner_outer:last-child {
+#elswlqjhag .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#dvfudpmomu .gt_column_spanner {
+#elswlqjhag .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2530,7 +2530,7 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#dvfudpmomu .gt_group_heading {
+#elswlqjhag .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2555,7 +2555,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#dvfudpmomu .gt_empty_group_heading {
+#elswlqjhag .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2569,13 +2569,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#dvfudpmomu .gt_from_md > :first-child {
+#elswlqjhag .gt_from_md > :first-child {
 margin-top: 0;
 }
-#dvfudpmomu .gt_from_md > :last-child {
+#elswlqjhag .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#dvfudpmomu .gt_row {
+#elswlqjhag .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2593,7 +2593,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#dvfudpmomu .gt_stub {
+#elswlqjhag .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2605,7 +2605,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvfudpmomu .gt_stub_row_group {
+#elswlqjhag .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2618,10 +2618,10 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#dvfudpmomu .gt_row_group_first td {
+#elswlqjhag .gt_row_group_first td {
 border-top-width: 2px;
 }
-#dvfudpmomu .gt_summary_row {
+#elswlqjhag .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2630,14 +2630,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvfudpmomu .gt_first_summary_row {
+#elswlqjhag .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#dvfudpmomu .gt_first_summary_row.thick {
+#elswlqjhag .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#dvfudpmomu .gt_last_summary_row {
+#elswlqjhag .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2646,7 +2646,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvfudpmomu .gt_grand_summary_row {
+#elswlqjhag .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2655,7 +2655,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvfudpmomu .gt_first_grand_summary_row {
+#elswlqjhag .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2664,10 +2664,10 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#dvfudpmomu .gt_striped {
+#elswlqjhag .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#dvfudpmomu .gt_table_body {
+#elswlqjhag .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2675,7 +2675,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvfudpmomu .gt_footnotes {
+#elswlqjhag .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2688,7 +2688,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dvfudpmomu .gt_footnote {
+#elswlqjhag .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-left: 4px;
@@ -2696,7 +2696,7 @@ padding-right: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvfudpmomu .gt_sourcenotes {
+#elswlqjhag .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2709,58 +2709,58 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dvfudpmomu .gt_sourcenote {
+#elswlqjhag .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvfudpmomu .gt_left {
+#elswlqjhag .gt_left {
 text-align: left;
 }
-#dvfudpmomu .gt_center {
+#elswlqjhag .gt_center {
 text-align: center;
 }
-#dvfudpmomu .gt_right {
+#elswlqjhag .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#dvfudpmomu .gt_font_normal {
+#elswlqjhag .gt_font_normal {
 font-weight: normal;
 }
-#dvfudpmomu .gt_font_bold {
+#elswlqjhag .gt_font_bold {
 font-weight: bold;
 }
-#dvfudpmomu .gt_font_italic {
+#elswlqjhag .gt_font_italic {
 font-style: italic;
 }
-#dvfudpmomu .gt_super {
+#elswlqjhag .gt_super {
 font-size: 65%;
 }
-#dvfudpmomu .gt_footnote_marks {
+#elswlqjhag .gt_footnote_marks {
 font-style: italic;
 font-weight: normal;
 font-size: 75%;
 vertical-align: 0.4em;
 }
-#dvfudpmomu .gt_asterisk {
+#elswlqjhag .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#dvfudpmomu .gt_indent_1 {
+#elswlqjhag .gt_indent_1 {
 text-indent: 5px;
 }
-#dvfudpmomu .gt_indent_2 {
+#elswlqjhag .gt_indent_2 {
 text-indent: 10px;
 }
-#dvfudpmomu .gt_indent_3 {
+#elswlqjhag .gt_indent_3 {
 text-indent: 15px;
 }
-#dvfudpmomu .gt_indent_4 {
+#elswlqjhag .gt_indent_4 {
 text-indent: 20px;
 }
-#dvfudpmomu .gt_indent_5 {
+#elswlqjhag .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -2834,7 +2834,7 @@ text-indent: 25px;
 <td headers="p.value_1" class="gt_row gt_center">0.9</td>
 <td headers="estimate_2" class="gt_row gt_center">0.75</td>
 <td headers="ci_2" class="gt_row gt_center">0.60, 0.93</td>
-<td headers="p.value_2" class="gt_row gt_center">0.007</td></tr>
+<td headers="p.value_2" class="gt_row gt_center">0.008</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    College graduate</td>
 <td headers="estimate_1" class="gt_row gt_center">0.71</td>
 <td headers="ci_1" class="gt_row gt_center">0.59, 0.85</td>
@@ -2861,14 +2861,14 @@ text-indent: 25px;
 <td headers="ci_1" class="gt_row gt_center">1.20, 1.66</td>
 <td headers="p.value_1" class="gt_row gt_center">&lt;0.001</td>
 <td headers="estimate_2" class="gt_row gt_center">1.45</td>
-<td headers="ci_2" class="gt_row gt_center">1.23, 1.72</td>
+<td headers="ci_2" class="gt_row gt_center">1.22, 1.72</td>
 <td headers="p.value_2" class="gt_row gt_center">&lt;0.001</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Hispanic</td>
 <td headers="estimate_1" class="gt_row gt_center">1.46</td>
 <td headers="ci_1" class="gt_row gt_center">1.25, 1.70</td>
 <td headers="p.value_1" class="gt_row gt_center">&lt;0.001</td>
 <td headers="estimate_2" class="gt_row gt_center">1.62</td>
-<td headers="ci_2" class="gt_row gt_center">1.37, 1.93</td>
+<td headers="ci_2" class="gt_row gt_center">1.37, 1.92</td>
 <td headers="p.value_2" class="gt_row gt_center">&lt;0.001</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Asian/PI, non-Hispanic</td>
 <td headers="estimate_1" class="gt_row gt_center">0.61</td>
@@ -2895,22 +2895,15 @@ text-indent: 25px;
 <td headers="estimate_1" class="gt_row gt_center">—</td>
 <td headers="ci_1" class="gt_row gt_center">—</td>
 <td headers="p.value_1" class="gt_row gt_center"></td>
-<td headers="estimate_2" class="gt_row gt_center"></td>
-<td headers="ci_2" class="gt_row gt_center"></td>
+<td headers="estimate_2" class="gt_row gt_center">—</td>
+<td headers="ci_2" class="gt_row gt_center">—</td>
 <td headers="p.value_2" class="gt_row gt_center"></td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Smoker</td>
 <td headers="estimate_1" class="gt_row gt_center">1.17</td>
 <td headers="ci_1" class="gt_row gt_center">1.03, 1.32</td>
 <td headers="p.value_1" class="gt_row gt_center">0.016</td>
-<td headers="estimate_2" class="gt_row gt_center"></td>
-<td headers="ci_2" class="gt_row gt_center"></td>
-<td headers="p.value_2" class="gt_row gt_center"></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">Smoking status</td>
-<td headers="estimate_1" class="gt_row gt_center"></td>
-<td headers="ci_1" class="gt_row gt_center"></td>
-<td headers="p.value_1" class="gt_row gt_center"></td>
-<td headers="estimate_2" class="gt_row gt_center">1.02</td>
-<td headers="ci_2" class="gt_row gt_center">0.94, 1.10</td>
+<td headers="estimate_2" class="gt_row gt_center">1.03</td>
+<td headers="ci_2" class="gt_row gt_center">0.90, 1.18</td>
 <td headers="p.value_2" class="gt_row gt_center">0.6</td></tr>
   </tbody>
   
@@ -2924,18 +2917,31 @@ text-indent: 25px;
 </div>
 <div id="lab-4---interaction" class="section level2">
 <h2>Lab 4 - Interaction</h2>
-<p>Exposure: Insurance EM: Education Outcome: Colonoscopy # Knol &amp;
-VanderWeele - Presenting EM 1. Present RR, OR/RD with CI for each
-stratum of E and X with a single reference category 2. Present RR, OR/RD
-with CI for E within strata of X 3. Present measures of EM on both
-additive and multiplicative scales (with CI &amp; P) 4. List confounders
-for which the relation of E and D was adjusted # Knol - Presenting
-Interaction 1. Present RR, OR/RD with CI for each stratum of E and B
-with single reference category 2. Present RR, OR/RD for E on D within
-strata of B and of B on D within strata of E 3. Present measures of EM
-on both additive (RERI) and multiplicative scales 4. List confounders
-for which relation between E/D was adjusted and for which relation
-between B/D were adjusted</p>
+<p>Exposure: Insurance EM: Education Outcome: Colonoscopy</p>
+</div>
+<div id="knol-vanderweele---presenting-em" class="section level1">
+<h1>Knol &amp; VanderWeele - Presenting EM</h1>
+<ol style="list-style-type: decimal">
+<li>Present RR, OR/RD with CI for each stratum of E and X with a single
+reference category</li>
+<li>Present RR, OR/RD with CI for E within strata of X</li>
+<li>Present measures of EM on both additive and multiplicative scales
+(with CI &amp; P)</li>
+<li>List confounders for which the relation of E and D was adjusted</li>
+</ol>
+</div>
+<div id="knol---presenting-interaction" class="section level1">
+<h1>Knol - Presenting Interaction</h1>
+<ol style="list-style-type: decimal">
+<li>Present RR, OR/RD with CI for each stratum of E and B with single
+reference category</li>
+<li>Present RR, OR/RD for E on D within strata of B and of B on D within
+strata of E</li>
+<li>Present measures of EM on both additive (RERI) and multiplicative
+scales</li>
+<li>List confounders for which relation between E/D was adjusted and for
+which relation between B/D were adjusted</li>
+</ol>
 <pre class="r"><code>library(summarytools)
 #make a variable for 0-45, 45+ 
 mydata &lt;-  mydata %&gt;%
@@ -3412,31 +3418,24 @@ fit.strata.LHS &lt;- glm(colonoscopy10yr19~ insured , subset=education==&quot;Le
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.HS &lt;- glm(colonoscopy10yr19~ insured , subset=education==&quot;High school grad&quot;, data=mydata, family=binomial(link=&quot;logit&quot;)) %&gt;%
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.SC &lt;- glm(colonoscopy10yr19~ insured , subset=education==&quot;Some college&quot;, data=mydata, family=binomial(link=&quot;logit&quot;)) %&gt;%
     tbl_regression(
     exponentiate = TRUE,
   )
-
-
 fit.strata.CG &lt;- glm(colonoscopy10yr19~ insured , subset=education==&quot;College graduate&quot;, data=mydata, family=binomial(link=&quot;logit&quot;)) %&gt;%
     tbl_regression(
     exponentiate = TRUE,
   )
-
 tbl_merge(list(fit.strata.LHS, fit.strata.HS, fit.strata.SC, fit.strata.CG), tab_spanner  = c(&quot;Less than HS&quot;, &quot;High School grad&quot;, &quot;Some College&quot;, &quot;College Grad&quot;))</code></pre>
-<div id="ymtnqxkpkw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="dscefstsvq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
-#ymtnqxkpkw .gt_table {
+#dscefstsvq .gt_table {
 display: table;
 border-collapse: collapse;
 margin-left: auto;
@@ -3460,7 +3459,7 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_heading {
+#dscefstsvq .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -3471,11 +3470,11 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_caption {
+#dscefstsvq .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ymtnqxkpkw .gt_title {
+#dscefstsvq .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -3486,7 +3485,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ymtnqxkpkw .gt_subtitle {
+#dscefstsvq .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -3497,12 +3496,12 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ymtnqxkpkw .gt_bottom_border {
+#dscefstsvq .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_col_headings {
+#dscefstsvq .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3516,7 +3515,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_col_heading {
+#dscefstsvq .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3535,7 +3534,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ymtnqxkpkw .gt_column_spanner_outer {
+#dscefstsvq .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3546,13 +3545,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ymtnqxkpkw .gt_column_spanner_outer:first-child {
+#dscefstsvq .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ymtnqxkpkw .gt_column_spanner_outer:last-child {
+#dscefstsvq .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ymtnqxkpkw .gt_column_spanner {
+#dscefstsvq .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3563,7 +3562,7 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ymtnqxkpkw .gt_group_heading {
+#dscefstsvq .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3588,7 +3587,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ymtnqxkpkw .gt_empty_group_heading {
+#dscefstsvq .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3602,13 +3601,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ymtnqxkpkw .gt_from_md > :first-child {
+#dscefstsvq .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ymtnqxkpkw .gt_from_md > :last-child {
+#dscefstsvq .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ymtnqxkpkw .gt_row {
+#dscefstsvq .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3626,7 +3625,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ymtnqxkpkw .gt_stub {
+#dscefstsvq .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3638,7 +3637,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ymtnqxkpkw .gt_stub_row_group {
+#dscefstsvq .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3651,10 +3650,10 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ymtnqxkpkw .gt_row_group_first td {
+#dscefstsvq .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ymtnqxkpkw .gt_summary_row {
+#dscefstsvq .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3663,14 +3662,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ymtnqxkpkw .gt_first_summary_row {
+#dscefstsvq .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_first_summary_row.thick {
+#dscefstsvq .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ymtnqxkpkw .gt_last_summary_row {
+#dscefstsvq .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3679,7 +3678,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_grand_summary_row {
+#dscefstsvq .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3688,7 +3687,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ymtnqxkpkw .gt_first_grand_summary_row {
+#dscefstsvq .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3697,10 +3696,10 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_striped {
+#dscefstsvq .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ymtnqxkpkw .gt_table_body {
+#dscefstsvq .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3708,7 +3707,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_footnotes {
+#dscefstsvq .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3721,7 +3720,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_footnote {
+#dscefstsvq .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-left: 4px;
@@ -3729,7 +3728,7 @@ padding-right: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ymtnqxkpkw .gt_sourcenotes {
+#dscefstsvq .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3742,58 +3741,58 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ymtnqxkpkw .gt_sourcenote {
+#dscefstsvq .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ymtnqxkpkw .gt_left {
+#dscefstsvq .gt_left {
 text-align: left;
 }
-#ymtnqxkpkw .gt_center {
+#dscefstsvq .gt_center {
 text-align: center;
 }
-#ymtnqxkpkw .gt_right {
+#dscefstsvq .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ymtnqxkpkw .gt_font_normal {
+#dscefstsvq .gt_font_normal {
 font-weight: normal;
 }
-#ymtnqxkpkw .gt_font_bold {
+#dscefstsvq .gt_font_bold {
 font-weight: bold;
 }
-#ymtnqxkpkw .gt_font_italic {
+#dscefstsvq .gt_font_italic {
 font-style: italic;
 }
-#ymtnqxkpkw .gt_super {
+#dscefstsvq .gt_super {
 font-size: 65%;
 }
-#ymtnqxkpkw .gt_footnote_marks {
+#dscefstsvq .gt_footnote_marks {
 font-style: italic;
 font-weight: normal;
 font-size: 75%;
 vertical-align: 0.4em;
 }
-#ymtnqxkpkw .gt_asterisk {
+#dscefstsvq .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ymtnqxkpkw .gt_indent_1 {
+#dscefstsvq .gt_indent_1 {
 text-indent: 5px;
 }
-#ymtnqxkpkw .gt_indent_2 {
+#dscefstsvq .gt_indent_2 {
 text-indent: 10px;
 }
-#ymtnqxkpkw .gt_indent_3 {
+#dscefstsvq .gt_indent_3 {
 text-indent: 15px;
 }
-#ymtnqxkpkw .gt_indent_4 {
+#dscefstsvq .gt_indent_4 {
 text-indent: 20px;
 }
-#ymtnqxkpkw .gt_indent_5 {
+#dscefstsvq .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -3942,17 +3941,18 @@ fit.interaction &lt;- glm(recentcolonoscopy~hasinsurance*college,
                    data=mydata, 
                    family = binomial(link = &quot;logit&quot;)) 
 
-interactionR1 &lt;- interactionR(fit.interaction,
+interactionR(fit.interaction,
 exposure_names = c(&quot;college&quot;, &quot;hasinsurance&quot;),
 ci.type = &quot;delta&quot;, ci.level = 0.95,
 em = F,  #T for EMM, F for interaction
 recode = T
-) </code></pre>
+) %&gt;%
+interactionR_table() %&gt;%
+             knit_print()</code></pre>
 <pre><code>## Warning in interactionR(fit.interaction, exposure_names = c(&quot;college&quot;,
 ## &quot;hasinsurance&quot;), : Recoding exposures; new reference category for college is 1
 ## and for hasinsurance is 0</code></pre>
-<pre class="r"><code>interactionR_table(interactionR1, file_path = &quot;interactionR2&quot;)</code></pre>
-<pre><code>## [1] &quot;The file &#39;interaction_table.docx&#39; has been saved to interactionR2&quot;
+<pre><code>## Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
 ## a flextable object.
 ## col_keys: `*`, `hasinsurance absent`, `hasinsurance present`, `Effect of hasinsurance within the strata of college` 
 ## header has 1 row(s) 
@@ -3970,17 +3970,19 @@ recode = T
 ## 3    2.76 [1.69, 4.51]                                   2.76 [1.69, 4.51]
 ## 4     2.4 [1.47, 3.91]                                   2.39 [1.74, 3.27]
 ## 5       0.87 [0.75, 1]                                                &lt;NA&gt;</code></pre>
-<pre class="r"><code>interactionR2 &lt;- interactionR(fit.interaction,
+<div class="tabwid"><style>.cl-e7717592{}.cl-e7671f52{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e76bad92{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e76bd47a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e76bd48e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e76bd48f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-e7717592"><caption style="margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;"><span>Interaction of college and hasinsurance</span></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-e76bd47a"><p class="cl-e76bad92"><span class="cl-e7671f52">*</span></p></th><th class="cl-e76bd47a"><p class="cl-e76bad92"><span class="cl-e7671f52">hasinsurance absent</span></p></th><th class="cl-e76bd47a"><p class="cl-e76bad92"><span class="cl-e7671f52">hasinsurance present</span></p></th><th class="cl-e76bd47a"><p class="cl-e76bad92"><span class="cl-e7671f52">Effect of hasinsurance within the strata of college</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">OR [95% CI]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">OR [95% CI]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">OR [95% CI]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">college absent</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">1 [Reference]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">2.76 [1.69, 4.51]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">2.76 [1.69, 4.51]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">college present</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">1 [0.57, 1.77]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">2.4 [1.47, 3.91]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">2.39 [1.74, 3.27]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">Effect of college within the strata of hasinsurance</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">1 [0.57, 1.77]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">0.87 [0.75, 1]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">Multiplicative scale</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">0.87 [0.48, 1.55]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">RERI</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">-0.37 [-1.18, 0.45]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">AP</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52">-0.15 [-0.44, 0.14]</span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48e"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e76bd48f"><p class="cl-e76bad92"><span class="cl-e7671f52">SI</span></p></td><td class="cl-e76bd48f"><p class="cl-e76bad92"><span class="cl-e7671f52">0.79 [0.56, 1.13]</span></p></td><td class="cl-e76bd48f"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td><td class="cl-e76bd48f"><p class="cl-e76bad92"><span class="cl-e7671f52"></span></p></td></tr></tbody></table></div>
+<pre class="r"><code>interactionR(fit.interaction,
 exposure_names = c(&quot;college&quot;, &quot;hasinsurance&quot;),
 ci.type = &quot;delta&quot;, ci.level = 0.95,
 em = T, 
 recode = T
-) </code></pre>
+) %&gt;%
+interactionR_table() %&gt;%
+             knit_print()</code></pre>
 <pre><code>## Warning in interactionR(fit.interaction, exposure_names = c(&quot;college&quot;,
 ## &quot;hasinsurance&quot;), : Recoding exposures; new reference category for college is 1
 ## and for hasinsurance is 0</code></pre>
-<pre class="r"><code>  interactionR_table(interactionR2, file_path = &quot;interactionR2&quot;)</code></pre>
-<pre><code>## [1] &quot;The file &#39;interaction_table.docx&#39; has been saved to interactionR2&quot;
+<pre><code>## Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
 ## a flextable object.
 ## col_keys: `*`, `hasinsurance absent`, `hasinsurance present`, `Effect of hasinsurance within the strata of college` 
 ## header has 1 row(s) 
@@ -3998,9 +4000,10 @@ recode = T
 ## 3                                   2.76 [1.69, 4.51]
 ## 4                                   2.39 [1.74, 3.27]
 ## 5                                                &lt;NA&gt;</code></pre>
+<div class="tabwid"><style>.cl-e827455c{}.cl-e81f6bc0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e822c0ae{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e822d382{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e822d38c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e822d396{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-e827455c"><caption style="margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;"><span>Modification of the effect of college and hasinsurance</span></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-e822d382"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">*</span></p></th><th class="cl-e822d382"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">hasinsurance absent</span></p></th><th class="cl-e822d382"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">hasinsurance present</span></p></th><th class="cl-e822d382"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">Effect of hasinsurance within the strata of college</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">OR [95% CI]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">OR [95% CI]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">OR [95% CI]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">college absent</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">1 [Reference]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">2.76 [1.69, 4.51]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">2.76 [1.69, 4.51]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">college present</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">1 [0.57, 1.77]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">2.4 [1.47, 3.91]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">2.39 [1.74, 3.27]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">Multiplicative scale</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">0.87 [0.48, 1.55]</span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d38c"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e822d396"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">RERI</span></p></td><td class="cl-e822d396"><p class="cl-e822c0ae"><span class="cl-e81f6bc0">-0.37 [-1.18, 0.45]</span></p></td><td class="cl-e822d396"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td><td class="cl-e822d396"><p class="cl-e822c0ae"><span class="cl-e81f6bc0"></span></p></td></tr></tbody></table></div>
+<div id="lab-5---mediation" class="section level2">
+<h2>Lab 5 - Mediation</h2>
 </div>
-<div id="lab-5--" class="section level2">
-<h2>Lab 5 -</h2>
 </div>
 
 
