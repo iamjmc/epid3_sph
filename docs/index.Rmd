@@ -1,11 +1,14 @@
 ---
-title: "Title: EPI3 - In Class Labs"
+title: "EPI3 - In Class Labs"
 author: "JMC"
 date: "Last Update: `r format(Sys.time(), '%m/%d/%y')`"
 output:
   html_document: default
+  
+  toc: true
+  number_sections: true
 ---
-## Lab 1
+### Lab 1
 ```{r, warning=FALSE, message=FALSE}
 #want to see the html page? go here: https://iamjmc.github.io/epid3_sph/
 library(haven)
@@ -14,8 +17,9 @@ library(tidyr)
 library(expss)
 #using NYC CHS data - see here for codebook: https://www.nyc.gov/assets/doh/downloads/pdf/episrv/chs2019-codebook.pdf
 chs19 <- read_sas("https://www1.nyc.gov/assets/doh/downloads/sas/episrv/chs2019_public.sas7bdat")
-keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "generalhealth", "education", "exercise19",  "wallmold", "colonoscopy10yr19")
+keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "age50up", "generalhealth", "education", "exercise19",  "wallmold", "colonoscopy10yr19")
 mydata <- dplyr::select(chs19, keepcols)
+
 
 mydata <-  mydata %>%
   mutate(eversmoker=case_when(
@@ -37,7 +41,8 @@ agegroup = recode_factor(agegroup, `1`="18-24",
                                    `4`="65+", 
                                    `.d`="Don't Know",
                                    `.r`= "Refused"),
-education = recode_factor(agegroup, `1`="Less than HS",
+
+education = recode_factor(education, `1`="Less than HS",
                                     `2`="High school grad",
                                     `3`="Some college",
                                     `4`="College graduate",
@@ -62,7 +67,8 @@ colonoscopy10yr19 = recode_factor(colonoscopy10yr19, `1`="Less than 10 yrs ago",
 )
 mydata = apply_labels(mydata,
                       insured = "Insured?",
-                      birthsex = "Birth Sex"
+                      birthsex = "Birth Sex", 
+                      colonoscopy10yr19 = "Colonoscopy in last 10 years"
 )
 
 #pesky missing asthma data
@@ -115,7 +121,7 @@ svy <-
     nest = TRUE,
     na.rm = TRUE
   )
-summary(svy)
+#summary(svy)
 #see means within the survey
 mean(mydata$smoker, na.rm=TRUE)
 svymean(~eversmoker, design=svy, strata = ~strata, weight = ~wt20_dual, data = mydata, na.rm=TRUE)
@@ -125,7 +131,7 @@ svytable(~eversmoker+birthsex, svy)
 svychisq(~eversmoker+birthsex, svy)
 ```
 
-## Lab 2
+### Lab 2 - causality & dags
 You are interested in assessing whether physical activity( exposure) is causally related to heart disease (outcome). 
 1. What other variables would you want to include in your DAG? Create a DAG with these variables and identify variables needed for total and direct effects?
 ```{r}
@@ -170,7 +176,7 @@ plot(g)
 #Adjusting for total effects= Age, Gender, SES
 #Adjusting for direct effects = Age, BMI, Diet, Gender, SES
 
-## Lab 3- Hypothesis Testing, Model Development, and Presentation of Results
+### Lab 3- Hypothesis Testing, Model Development, and Presentation of Results
 Just a note: borough would require a DUA and currently not available. The variables noisetraffic, and badairwarning do not exist in CHS19. I use Wall Mold 
 ```{r, warning=FALSE, message=FALSE}
 #Draw a dag for association between USBORN and EVERASTHMA
@@ -291,32 +297,127 @@ unadjusted <- tbl_stack(list(fit.usborn, fit.education, fit.race, fit.eversmoker
 tbl_merge(list(unadjusted, fit.adjusted), tab_spanner  = c("Unadjusted Analysis", "Adjusted Analysis"))
 ```
 
-Lab 4 - Interaction
-Exposure: Insurance
-EM: Education
-Outcome: Colonoscopy 
+### Lab 4 - Interaction
+Exposure: Insurance EM: Education Outcome: Colonoscopy 
+# Knol & VanderWeele - Presenting EM 
+1. Present RR, OR/RD with CI for each stratum of E and X with a single reference category
+2. Present RR, OR/RD with CI for E within strata of X
+3. Present measures of EM on both additive and multiplicative scales (with CI & P)
+4. List confounders for which the relation of E and D was adjusted
+# Knol - Presenting Interaction
+1. Present RR, OR/RD with CI for each stratum of E and B with single reference category 
+2. Present RR, OR/RD for E on D within strata of B and of B on D within strata of E
+3. Present measures of EM on both additive (RERI) and multiplicative scales 
+4. List confounders for which relation between E/D was adjusted and for which relation between B/D were adjusted
 ```{r,  warning=FALSE, message=FALSE}
-label(mydata$colonoscopy10yr19) <- "Colonoscopy in last 10 years"
+library(summarytools)
 #make a variable for 0-45, 45+ 
 mydata <-  mydata %>%
-  mutate(age45plus=case_when(
-  mydata$agegroup=="18-24"| mydata$agegroup=="25-44" ~ 0,
-  mydata$agegroup=="45-64" | mydata$agegroup=="65+" ~ 1
-)) 
-
-mydata <- transform(mydata,
-age45plus = recode_factor(age45plus, `0`="Under 45 plus", 
-                                      `1`="Over 45 plus"
+transform(mydata,
+age50up = recode_factor(age50up, `1`="50-64 Yrs", 
+                                      `2`="65+"
 ))
-
-table(mydata$agegroup, mydata$age45plus)
-table1(~insured + colonoscopy10yr19+ education + age45plus, data=mydata, overall="Total")
-mydata %$%  # Acts like with(tobacco, ...)
-  ctable(x=education, y=insured, z=age45plus,
+#1 Look at insurance status and colonoscopy in different strata of education
+table1(~insured + colonoscopy10yr19+ education + age50up, data=mydata, overall="Total")
+mydata %$%  # First examine insurance and education
+  ctable(x=education, y=insured, 
          chisq = TRUE,
          OR    = TRUE,
          RR    = TRUE,
          headings = FALSE,
+         useNA="no",
          prop = "c" ) %>%
   print(method = "render")
+
+mydata %$%  # Next colonoscopy and age 45+ 
+  ctable(x=age50up, y=colonoscopy10yr19, 
+         chisq = TRUE,
+         OR    = TRUE,
+         RR    = TRUE,
+         headings = FALSE,
+         useNA="no", #hides missing values
+         prop = "c" ) %>%
+  print(method = "render")
+
+#make tables by level of education
+stby(data    = list(x = mydata$insured, y = mydata$colonoscopy10yr19), 
+     INDICES = mydata$education, 
+     FUN     = ctable,
+     chisq=TRUE, #no OR/RR here because it is categorical
+     useNA="no"
+     )
+
+
+#2 make new variable for college education
+mydata <- mydata %>%
+  mutate(college=case_when(
+    mydata$education=="College graduate" ~ 1, 
+    mydata$education!="College graduate" ~ 0
+  )) %>% #theres prob an easier way to do this
+  transform(mydata, college=recode_factor(college, `0`="No College Grad", 
+                                          `1`="College Grad"))
+
+
+mydata %$%  # what percentage of age 45+ are college graduates?
+  ctable(x=age50up, y=college, 
+         chisq = TRUE,
+         OR    = TRUE,
+         RR    = TRUE,
+         headings = FALSE,
+         useNA="no",
+         prop = "c" ) %>%
+  print(method = "render")
+
+mydata$colonoscopy10yr19 <- relevel(mydata$colonoscopy10yr19, ref = 2) 
+mydata$insured <- relevel(mydata$insured, ref = 2) 
+
+#make tables by college education
+stby(data    = list(x = mydata$insured, y = mydata$colonoscopy10yr19), 
+     INDICES = mydata$college, 
+     FUN     = ctable,
+     chisq=TRUE, 
+     OR= TRUE,
+     RR=TRUE,
+     useNA="no"
+     )
+library(interactionR)
+library(broom)
+fit.strata <- glm(colonoscopy10yr19~ insured + strata(education), data=mydata, family=binomial(link="logit"))
+
+results.strata<-tidy(fit.strata)
+fit_cis_95 <- confint(fit.strata, level = 0.95) %>% 
+  data.frame() %>%
+  rename("conf.low_95" = "X2.5..",
+         "conf.high_95" = "X97.5..")
+results <- bind_cols(results.strata, 
+                     fit_cis_95) %>%
+           rename(Variable = term,
+                  Coefficient = estimate,
+                  SE = std.error) %>%
+           filter(Variable != "(Intercept)")
+results <- results %>% select(-SE, 
+                              -statistic,
+                              -p.value)
+
+library(ggplot2)
+ggplot(results, 
+       aes(x = Variable, y = Coefficient)) +
+        geom_hline(yintercept = 0, 
+                   colour = gray(1/2), lty = 2) +
+        geom_point(aes(x = Variable, 
+                    y = Coefficient)) + 
+        geom_linerange(aes(x = Variable, 
+                     ymin = conf.low_95,
+                     ymax = conf.high_95),
+                   lwd = 1/2) + 
+        ggtitle("Outcome: Colonoscopy") +
+        coord_flip()
+
+fit.interaction <- glm(colonoscopy10yr19~insured*college, 
+                   data=mydata, na.action=na.omit,
+                   family = binomial(link = "logit")) 
+
+
 ```
+
+## Lab 5 - 
