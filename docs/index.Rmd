@@ -389,6 +389,11 @@ fit.strata.LHS <- glm(colonoscopy10yr19~ insured , subset=education=="Less than 
     tbl_regression(
     exponentiate = TRUE,
   )
+fit.crude <- glm(colonoscopy10yr19~ insured, data=mydata, family=binomial(link="logit")) %>%
+  tbl_regression(
+  exponentiate = TRUE,
+  )
+
 fit.strata.HS <- glm(colonoscopy10yr19~ insured , subset=education=="High school grad", data=mydata, family=binomial(link="logit")) %>%
     tbl_regression(
     exponentiate = TRUE,
@@ -401,39 +406,41 @@ fit.strata.CG <- glm(colonoscopy10yr19~ insured , subset=education=="College gra
     tbl_regression(
     exponentiate = TRUE,
   )
-tbl_merge(list(fit.strata.LHS, fit.strata.HS, fit.strata.SC, fit.strata.CG), tab_spanner  = c("Less than HS", "High School grad", "Some College", "College Grad"))
-results.strata<-tidy(fit.strata)
-fit_cis_95 <- confint(fit.strata, level = 0.95) %>% 
-  data.frame() %>%
-  rename("conf.low_95" = "X2.5..",
-         "conf.high_95" = "X97.5..")
-results <- bind_cols(results.strata, 
-                     fit_cis_95) %>%
-           rename(Variable = term,
-                  Coefficient = estimate,
-                  SE = std.error) %>%
-           filter(Variable != "(Intercept)")
-results <- results %>% select(-SE, 
-                              -statistic,
-                              -p.value)
+tbl_merge(list(fit.crude, fit.strata.LHS, fit.strata.HS, fit.strata.SC, fit.strata.CG), tab_spanner  = c("Crude OR", "Less than HS", "High School grad", "Some College", "College Grad"))
+```
 
-library(ggplot2)
-ggplot(results, 
-       aes(x = Variable, y = Coefficient)) +
-        geom_hline(yintercept = 0, 
-                   colour = gray(1/2), lty = 2) +
-        geom_point(aes(x = Variable, 
-                    y = Coefficient)) + 
-        geom_linerange(aes(x = Variable, 
-                     ymin = conf.low_95,
-                     ymax = conf.high_95),
-                   lwd = 1/2) + 
-        ggtitle("Outcome: Colonoscopy") +
-        coord_flip()
-
+```{r}
+#calculate risk differences between college
 library(epiR)
+library(riskCommunicator)
 tab <- table(mydata$insured, mydata$colonoscopy10yr19, mydata$college)
 epi.2by2(tab)
+
+colon.education.risk <- gComp(data = mydata, Y= "colonoscopy10yr19", X= "insured", #you can add covariates here by Z=c()
+                           subgroup="education",
+                           outcome.type = "binary", R = 200)
+summary(colon.education.risk)
+#plotting! :) 
+library(ggplot2)
+ggplot(colon.education.risk$results.df %>% 
+         filter(Parameter %in% c("Risk Difference", "Risk Ratio"))
+) + 
+  geom_pointrange(aes(x = Comparison, 
+                      y = Estimate, 
+                      ymin = `2.5% CL`, 
+                      ymax = `97.5% CL`, 
+                      color = Comparison), 
+                  shape = 2
+  ) + 
+  coord_flip() + 
+  facet_wrap(~Parameter, scale = "free") + 
+  theme_bw() + 
+  theme(legend.position = "none")
+
+colon.college.risk <- gComp(data = mydata, Y= "colonoscopy10yr19", X= "insured", 
+                           subgroup="college",
+                           outcome.type = "binary", R = 200)
+summary(colon.college.risk)
 ```
 
 ```{r, warning=FALSE}
@@ -450,19 +457,25 @@ ci.type = "delta", ci.level = 0.95,
 em = F,  #T for EMM, F for interaction
 recode = T
 ) %>%
-interactionR_table() %>%
+interactionR_table(p.value=TRUE) %>%
              knit_print()
-
+#RERI<0 implies negative additive interaction
+#Multiplicative<1 implies negative multiplicative interaction
 interactionR(fit.interaction,
 exposure_names = c("college", "hasinsurance"),
 ci.type = "delta", ci.level = 0.95,
 em = T, 
 recode = T
 ) %>%
-interactionR_table() %>%
+interactionR_table(p.value=TRUE) %>%
              knit_print()
 
 
 ```
 
 ## Lab 5 - Mediation
+
+
+
+
+## Lab 6 - Selection Bias & Models 
