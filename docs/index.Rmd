@@ -18,7 +18,7 @@ library(tidyr)
 library(expss)
 #using NYC CHS data - see here for codebook: https://www.nyc.gov/assets/doh/downloads/pdf/episrv/chs2019-codebook.pdf
 chs19 <- read_sas("https://www1.nyc.gov/assets/doh/downloads/sas/episrv/chs2019_public.sas7bdat")
-keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "age50up", "generalhealth", "education", "exercise19",  "wallmold", "colonoscopy10yr19")
+keepcols <- c("strata", "wt20_dual", "usborn", "everasthma", "birthsex", "agegroup", "smoker", "insured", "newrace6", "age45up", "age50up", "generalhealth", "education", "exercise19", "pcp19", "wallmold", "colonoscopy10yr19")
 mydata <- dplyr::select(chs19, keepcols)
 
 
@@ -64,7 +64,9 @@ exercise19= recode_factor(exercise19, `1` = "Yes",
 wallmold= recode_factor(wallmold, `1` = "Yes",
                                       `2`="No"),
 colonoscopy10yr19 = recode_factor(colonoscopy10yr19, `1`="Less than 10 yrs ago",
-                                  `2` = "Never or >=10yr")
+                                  `2` = "Never or >=10yr"),
+pcp19 = recode_factor(pcp19,`1`= "Yes PCP",
+                        `2`= "No PCP" )
 )
 mydata = apply_labels(mydata,
                       insured = "Insured?",
@@ -429,8 +431,7 @@ ggplot(colon.education.risk$results.df %>%
                       y = Estimate, 
                       ymin = `2.5% CL`, 
                       ymax = `97.5% CL`, 
-                      color = Comparison), 
-                  shape = 2
+                      color = Comparison)
   ) + 
   coord_flip() + 
   facet_wrap(~Parameter, scale = "free") + 
@@ -474,8 +475,106 @@ interactionR_table(p.value=TRUE) %>%
 ```
 
 ## Lab 5 - Mediation
+Exposure: Insurance Outcome: Recent Colonoscopy Confounder: Age Mediator: PCP
+
+```{r, warning=FALSE}
+library(mediation)
+library(table1)
+mydata <- mydata %>%
+           filter(!is.na(colonoscopy10yr19),
+                  !is.na(pcp19),
+                  !is.na(hasinsurance))
+mydata <- mydata %>%
+  mutate(haspcp=case_when(
+    mydata$pcp19=="Yes PCP" ~ 1, 
+    mydata$pcp19=="No PCP" ~0
+  ))
+
+table1(~insured + age50up + pcp19 | colonoscopy10yr19, data=mydata, overall="Total", extra.col=list(`P-value`=pvalue))
+#What is the relationship between Insurance (exposure) and Recent colonoscopy (outcome)?
+gComp(data=mydata, Y="colonoscopy10yr19", X="insured", outcome.type="binary")%>%
+summary()
+#What is the relationship between Insurance(exposure)and having PCP (mediator)?
+gComp(data=mydata, Y="pcp19", X="insured", outcome.type="binary") %>%
+summary()
+#What is the relation between PCP (mediator) and Colonoscopy (outcome)? 
+gComp(data=mydata, Y="colonoscopy10yr19", X="pcp19", outcome.type="binary") %>%
+summary()
+#define control condition value
+X_control <- mean(mydata$haspcp)-sd(mydata$haspcp)
+#define treatment condition value
+X_treatment <-mean(mydata$haspcp)+sd(mydata$haspcp)
+# (M on X)
+a1<-glm(data=mydata, haspcp~hasinsurance+age50up, family=binomial(link="logit"))
+a1.0 <-a1$coefficients[1]
+a1.1 <- a1$coefficients[2]
+#Y~X+M
+b1<-glm(data=mydata, recentcolonoscopy~hasinsurance+haspcp+age50up, family=binomial(link="logit"))
+b1.0 <- b1$coefficients[1]
+c1 <-b1$coefficients[2]
+b1.1 <- b1$coefficients[3]
 
 
+#calculate estimated mediator for control/treatment conditions
+M_est_control <- (a1.0+a1.1*X_control)
+M_est_treatment <- (a1.0+a1.1*X_treatment)
 
+#indirect effect - control
+IE_control <- (1/(1+exp(-(b1.0+b1.1*M_est_treatment+c1*X_control)))-1/(1+exp(-(b1.0+b1.1*M_est_control+c1*X_control))))
+print(IE_control)
+
+#indirect effect - treatment
+IE_treatment <- (1/(1+exp(-(b1.0+b1.1*M_est_treatment+c1*X_treatment)))-1/(1+exp(-(b1.0+b1.1*M_est_control+c1*X_treatment))))
+print(IE_treatment)
+
+m1<-mediate(a1, b1, outcome="recentcolonoscopy", treat="hasinsurance", mediator="haspcp")
+  summary(m1)
+  #ACME = average causal mediation effect (indirect effect)
+  #ADE = average direct effect 
+
+```
+TE - change in Y from exposure 0->1 while mediator is allowed to trak the change in T
+
+CDE- change in Y comparing exposed and unexposed with pre-set Mediator level (M=0)
+
+NDE - change in Y from exposued to unexposed with mediator set at whatever value it would have attained for each individual at E=0
+
+NIE - change in Y when E=0 and M = value at E=1
+
+CDE = NDE if there is no interaction.
+
+TE=NDE+NIE
 
 ## Lab 6 - Selection Bias & Models 
+
+```{r}
+
+
+```
+
+## Lab 7/8 - Cohort Studies
+```{r}
+library(haven)
+acs <- read_sas("~/Downloads/acs(1).sas7bdat", NULL)
+ summary(acs)
+ table(acs$death)
+acs %>% transform(acs,
+death = recode_factor(death, `0`="Alive", 
+                              `1`="Dead"),
+ART_init=recode_factor(ART_init, `0` = "No ART",
+                                  `1` = "ART init")
+)
+
+table(acs$death, acs$ART_init)
+#2x2 table between ART & death
+gComp(data=acs, Y="death", X="ART_init", outcome.type="binary") %>%
+summary()
+
+#logistic regression between ART & death
+glm(death~ART_init, data=acs, family=binomial(link="logit"))%>%
+    tbl_regression(
+    exponentiate = TRUE,
+  )
+ 
+ #calculate crude SMR
+```
